@@ -3,6 +3,7 @@ import java.util.*;
 public class ConsoleApp {
 	private PeopleTable pt;
 	private PhonesTable pht;
+	private Scanner in;
 
 	public void create()
 	{
@@ -18,9 +19,9 @@ public class ConsoleApp {
 
 	public ConsoleApp()
 	{
-		Scanner in = new Scanner(System.in);
 		String password;
 		String user;
+		in = new Scanner(System.in);
 		System.out.println("Введите пользователя БД:");
 		user = in.next();
 		System.out.println("Введите пароль пользователя БД:");
@@ -36,7 +37,6 @@ public class ConsoleApp {
 		}
 		pt = new PeopleTable();
 		pht = new PhonesTable();
-		in.close();
 	}
 	
 	public void initialize()
@@ -52,11 +52,11 @@ public class ConsoleApp {
 	public void show_main_menu()
 	{
 		System.out.print(
-				"Добро пожаловать!\n" + 
-				"Основное меню (выберите цифру в соответствии с необходимым действием):\n" + 
-				"1 - просмотр людей;\n" +
-				"2 - сброс и инициализация таблиц;\n" +
-				"9 - выход.\n"
+			"Добро пожаловать!\n" + 
+			"Основное меню (выберите цифру в соответствии с необходимым действием):\n" + 
+			"1 - просмотр людей;\n" +
+			"2 - сброс и инициализация таблиц;\n" +
+			"9 - выход.\n"
 		);
 	}
 	
@@ -78,25 +78,25 @@ public class ConsoleApp {
 	public void show_people()
 	{
 		System.out.print(
-				"Просмотр списка людей!\n" + 
-				"№\tФамилия\tИмя\tОтчество\n"
+			"Просмотр списка людей!\n" + 
+			"№\tФамилия\tИмя\tОтчество\n"
 		);
 		String[][] list = pt.all();
 		for(int i = 0; i < list.length; i++) {
 			System.out.print(
-					list[i][0] + "\t" +
-					list[i][1] + "\t" +
-					list[i][2] + "\t" +
-					list[i][3] + "\n"
+				list[i][0] + "\t" +
+				list[i][1] + "\t" +
+				list[i][2] + "\t" +
+				list[i][3] + "\n"
 			);
 		}
 		System.out.print(
-				"Дальнейшие операции:\n" + 
-						"0 - возврат в главное меню;\n" +
-						"3 - добавление нового человека;\n" +
-						"4 - удаление человека;\n" +
-						"5 - просмотр телефонов человека;\n" +
-						"9 - выход.\n"
+			"Дальнейшие операции:\n" + 
+			"0 - возврат в главное меню;\n" +
+			"3 - добавление нового человека;\n" +
+			"4 - удаление человека;\n" +
+			"5 - просмотр телефонов человека;\n" +
+			"9 - выход.\n"
 		);
 	}
 	
@@ -151,9 +151,8 @@ public class ConsoleApp {
 	public void main_cycle()
 	{
 		int current_menu = 0;
-    Scanner in = new Scanner(System.in);
-    int next_step;
-    while(current_menu != 9)
+	    int next_step;
+	    while(current_menu != 9)
 		{
 			switch(current_menu){
 			case 0:
