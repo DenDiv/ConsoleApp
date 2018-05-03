@@ -36,6 +36,7 @@ public class ConsoleApp {
 		}
 		pt = new PeopleTable();
 		pht = new PhonesTable();
+		in.close();
 	}
 	
 	public void initialize()
