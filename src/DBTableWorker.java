@@ -56,7 +56,7 @@ public class DBTableWorker {
 		if(data.trim().length() == 0)
 			return "null";
 		else
-			return "'" + data.trim() + "'";
+			return data.trim();
 	}
 	
 	public boolean test_connection()

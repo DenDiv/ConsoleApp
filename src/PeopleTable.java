@@ -1,5 +1,6 @@
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class PeopleTable extends DBTableWorker {
@@ -82,13 +83,13 @@ public class PeopleTable extends DBTableWorker {
 	
 	public void create_one(String[] data)
 	{
-		String sql = "INSERT INTO people(id, last_name, first_name, second_name) VALUES(people_id_seq.nextval, " + 
-				data_to_field(data[0]) + ", " + 
-				data_to_field(data[1]) + ", " + 
-				data_to_field(data[2]) + ")";
+		String sql = "INSERT INTO people(id, last_name, first_name, second_name) VALUES(people_id_seq.nextval, ?, ?, ?)"; 
 		try{  
-			Statement stmt = connection.cbase.createStatement();  
-			stmt.executeUpdate(sql);
+		  PreparedStatement pstmt = connection.cbase.prepareStatement(sql);  
+      pstmt.setString(1, data_to_field(data[0])); 
+      pstmt.setString(2, data_to_field(data[1])); 
+      pstmt.setString(3, data_to_field(data[2])); 
+			pstmt.executeUpdate();
 		}catch(Exception e){ 
 			System.out.println(e);
 		}
