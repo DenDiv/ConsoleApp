@@ -100,13 +100,40 @@ public class ConsoleApp {
 		);
 	}
 	
-	public int after_show_people(int next_step)
+  public int show_phones_by_people(Scanner in)
+  {
+    String[] data = new String[3];
+    String[] person;
+    System.out.print(
+      "Дальнейшие операции:\n" + 
+      "0 - возврат в главное меню;\n" +
+      "3 - добавление нового телефона;\n" +
+      "4 - удаление человека;\n" +
+      "9 - выход.\n"
+    );
+    System.out.println("Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
+    in.nextLine();
+    data[0] = in.nextLine();
+    while(data[0].trim().length() == 0) {
+      System.out.println("Пустая строка. Повторите ввод! Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
+      data[0] = in.nextLine();
+      person = pt.find_by_position(Integer.parseInt(data[0]));
+      System.out.println(person[1]);
+    }
+    if(data[0].equals("0")) return 1;
+  }
+
+  public int after_show_people(int next_step, Scanner in)
 	{
 		
-		if(next_step == 4 || next_step == 5) 
+		if(next_step == 4) 
 		{
 			System.out.println("Пока не реализовано!");
 			return 1;
+		}
+		else if(next_step == 5) 
+		{
+		  return show_phones_by_people(in);
 		}
 		else if(next_step != 0 && next_step != 9 && next_step != 3)
 		{
@@ -163,7 +190,7 @@ public class ConsoleApp {
 			case 1:
 				show_people();
 				next_step = read_next_step(in);
-				current_menu = after_show_people(next_step);
+				current_menu = after_show_people(next_step, in);
 				break;
 			case 2:
 				show_main_menu();

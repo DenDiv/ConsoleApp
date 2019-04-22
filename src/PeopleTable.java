@@ -81,7 +81,30 @@ public class PeopleTable extends DBTableWorker {
 		return result.toArray(str_result);
 	}
 	
-	public void create_one(String[] data)
+  public String[] find_by_position(int position)
+  {
+    String[] result = new String[4];
+    String sql = 
+        "SELECT id, last_name, first_name, second_name FROM people ORDER BY last_name, first_name, second_name FETCH FIRST ROW ONLY OFFSET ? ROWS";    
+    try{  
+      PreparedStatement pstmt = connection.cbase.prepareStatement(sql);  
+      pstmt.setInt(1, position); 
+      pstmt.execute();
+      ResultSet rs = pstmt.executeQuery();
+      while(rs.next()){
+        result[0] = rs.getString(0);
+        result[1] = rs.getString(1);
+        result[2] = rs.getString(2);
+        result[3] = rs.getString(3);
+      }
+    }catch(Exception e){ 
+      System.out.println(sql);
+      System.out.println(e);
+    }
+    return result;
+  }
+
+  public void create_one(String[] data)
 	{
 		String sql = "INSERT INTO people(id, last_name, first_name, second_name) VALUES(people_id_seq.nextval, ?, ?, ?)"; 
 		try{  

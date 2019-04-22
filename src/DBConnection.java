@@ -76,8 +76,8 @@ public class DBConnection {
 			Class.forName("oracle.jdbc.driver.OracleDriver");  
   
 			this.cbase = DriverManager.getConnection(
-					//"jdbc:oracle:thin:@localhost:1521:orcl", user, password); // ִכÿ המלא
-					"jdbc:oracle:thin:@//ifeb-ora.ifeb.mephi.ru:1521/pdborcl.ifeb.mephi.ru", user, password); // ִכÿ ָּװָ
+					"jdbc:oracle:thin:@localhost:1522:orcl", user, password); // ִכÿ המלא
+					//"jdbc:oracle:thin:@//ifeb-ora.ifeb.mephi.ru:1521/pdborcl.ifeb.mephi.ru", user, password); // ִכÿ ָּװָ
 		}catch(Exception e){ 
 			System.out.println(e);
 		}  
