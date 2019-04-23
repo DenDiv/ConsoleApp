@@ -85,18 +85,19 @@ public class PeopleTable extends DBTableWorker {
   {
     String[] result = new String[4];
     String sql = 
-        "SELECT id, last_name, first_name, second_name FROM people ORDER BY last_name, first_name, second_name FETCH FIRST ROW ONLY OFFSET ? ROWS";    
+        "SELECT id, last_name, first_name, second_name FROM people ORDER BY last_name, first_name, second_name OFFSET ? ROWS FETCH FIRST ROW ONLY ";    
     try{  
       PreparedStatement pstmt = connection.cbase.prepareStatement(sql);  
-      pstmt.setInt(1, position); 
+      pstmt.setInt(1, position - 1); 
       pstmt.execute();
       ResultSet rs = pstmt.executeQuery();
       while(rs.next()){
-        result[0] = rs.getString(0);
-        result[1] = rs.getString(1);
-        result[2] = rs.getString(2);
-        result[3] = rs.getString(3);
+        result[0] = rs.getString(1);
+        result[1] = rs.getString(2);
+        result[2] = rs.getString(3);
+        result[3] = rs.getString(4);
       }
+      pstmt.close();
     }catch(Exception e){ 
       System.out.println(sql);
       System.out.println(e);
@@ -113,6 +114,7 @@ public class PeopleTable extends DBTableWorker {
       pstmt.setString(2, data_to_field(data[1])); 
       pstmt.setString(3, data_to_field(data[2])); 
 			pstmt.executeUpdate();
+	    pstmt.close();
 		}catch(Exception e){ 
 			System.out.println(e);
 		}

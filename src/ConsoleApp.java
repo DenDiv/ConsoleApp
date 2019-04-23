@@ -4,6 +4,8 @@ public class ConsoleApp {
 	private PeopleTable pt;
 	private PhonesTable pht;
 	private Scanner in;
+	private int person_id;
+  private String[] person_obj;
 
 	public void create()
 	{
@@ -77,6 +79,7 @@ public class ConsoleApp {
 	
 	public void show_people()
 	{
+	  this.person_id = -1;
 		System.out.print(
 			"Просмотр списка людей!\n" + 
 			"№\tФамилия\tИмя\tОтчество\n"
@@ -104,43 +107,72 @@ public class ConsoleApp {
   {
     String[] data = new String[3];
     String[] person;
-    System.out.print(
-      "Дальнейшие операции:\n" + 
-      "0 - возврат в главное меню;\n" +
-      "3 - добавление нового телефона;\n" +
-      "4 - удаление человека;\n" +
-      "9 - выход.\n"
-    );
-    System.out.println("Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
-    in.nextLine();
-    data[0] = in.nextLine();
-    while(data[0].trim().length() == 0) {
-      System.out.println("Пустая строка. Повторите ввод! Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
+    String[][] list;
+    if(this.person_id == -1){
+      System.out.println("Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
+      in.nextLine();
       data[0] = in.nextLine();
+      while(data[0].trim().length() == 0) {
+        System.out.println("Пустая строка. Повторите ввод! Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
+        data[0] = in.nextLine();
+      }
+      if(data[0].equals("0")) return 1;
       person = pt.find_by_position(Integer.parseInt(data[0]));
-      System.out.println(person[1]);
+      if(person[0].length() == 0) {
+        System.out.println("Введено число, неудовлетворяющее количеству людей!");
+        return 5;
+      }
+      else {
+        this.person_id = Integer.parseInt(person[0]);
+        this.person_obj = person;
+      }
     }
-    if(data[0].equals("0")) return 1;
+    System.out.println("Выбран человек: " + this.person_obj[1] + " " + this.person_obj[2] + " " + this.person_obj[3]);
+    System.out.println("Телефоны:");
+    list = pht.all_by_person_id(this.person_id);
+    for(int i = 0; i < list.length; i++) {
+      System.out.print(
+        list[i][1] + "\n"
+      );
+    }
+    System.out.print(
+        "Дальнейшие операции:\n" + 
+        "0 - возврат в главное меню;\n" +
+        "1 - возврат в просмотр людей;\n" +
+        "6 - добавление нового телефона;\n" +
+        "7 - удаление телефона;\n" +
+        "9 - выход.\n"
+      );
+    return read_next_step(in);
   }
 
   public int after_show_people(int next_step, Scanner in)
 	{
 		
-		if(next_step == 4) 
-		{
-			System.out.println("Пока не реализовано!");
-			return 1;
-		}
-		else if(next_step == 5) 
-		{
-		  return show_phones_by_people(in);
-		}
-		else if(next_step != 0 && next_step != 9 && next_step != 3)
-		{
-			System.out.println("Выбрано неверное число! Повторите ввод!");
-			return 1;
-		}
-	  return next_step;
+    while(true){
+  		if(next_step == 4)
+  		{
+  			System.out.println("Пока не реализовано!");
+  			return 1;
+  		}
+  		else if(next_step == 6 || next_step == 7) 
+      {
+        System.out.println("Пока не реализовано!");
+        next_step = 5;
+      }
+  		else if(next_step == 5) 
+  		{
+  		  next_step = show_phones_by_people(in);
+  		}
+  		else if(next_step != 0 && next_step != 9 && next_step != 3)
+  		{
+  			System.out.println("Выбрано неверное число! Повторите ввод!");
+  			return 1;
+  		}
+  		else {
+  		  return next_step;
+  		}
+    }
 	}
 
 	public int read_next_step(Scanner in)
