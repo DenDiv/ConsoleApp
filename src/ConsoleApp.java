@@ -109,22 +109,24 @@ public class ConsoleApp {
     String[] person;
     String[][] list;
     if(this.person_id == -1){
-      System.out.println("Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
       in.nextLine();
-      data[0] = in.nextLine();
-      while(data[0].trim().length() == 0) {
-        System.out.println("Пустая строка. Повторите ввод! Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
+      while(true) {
+        System.out.println("Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
         data[0] = in.nextLine();
-      }
-      if(data[0].equals("0")) return 1;
-      person = pt.find_by_position(Integer.parseInt(data[0]));
-      if(person[0].length() == 0) {
-        System.out.println("Введено число, неудовлетворяющее количеству людей!");
-        return 5;
-      }
-      else {
-        this.person_id = Integer.parseInt(person[0]);
-        this.person_obj = person;
+        while(data[0].trim().length() == 0) {
+          System.out.println("Пустая строка. Повторите ввод! Укажите номер строки, в которой записана интересующая Вас персона (0 - отмена):");
+          data[0] = in.nextLine();
+        }
+        if(data[0].equals("0")) return 1;
+        person = pt.find_by_position(Integer.parseInt(data[0]));
+        if(person[0].length() == 0) {
+          System.out.println("Введено число, неудовлетворяющее количеству людей!");
+        }
+        else {
+          this.person_id = Integer.parseInt(person[0]);
+          this.person_obj = person;
+          break;
+        }
       }
     }
     System.out.println("Выбран человек: " + this.person_obj[1] + " " + this.person_obj[2] + " " + this.person_obj[3]);

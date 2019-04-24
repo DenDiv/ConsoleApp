@@ -84,6 +84,7 @@ public class PeopleTable extends DBTableWorker {
   public String[] find_by_position(int position)
   {
     String[] result = new String[4];
+    result[0] = "";
     String sql = 
         "SELECT id, last_name, first_name, second_name FROM people ORDER BY last_name, first_name, second_name OFFSET ? ROWS FETCH FIRST ROW ONLY ";    
     try{  
